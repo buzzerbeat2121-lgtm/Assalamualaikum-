@@ -1,0 +1,775 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portofolio Digital</title>
+
+    <style>
+        /* =========================
+           RESET & DASAR
+        ========================= */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: #f8f9fa;
+            color: #333;
+            line-height: 1.6;
+            transition: background-color 0.4s, color 0.4s;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .container {
+            width: 85%;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px 0;
+        }
+
+        section {
+            background-color: #fff;
+            margin-bottom: 25px;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            transition: background-color 0.4s, color 0.4s;
+        }
+
+        h2 {
+            color: #0056b3;
+            border-bottom: 2px solid #0056b3;
+            padding-bottom: 8px;
+            margin-bottom: 20px;
+            font-size: 1.5rem;
+        }
+
+        /* =========================
+           HEADER & NAVIGASI
+        ========================= */
+        header {
+            background-color: #0056b3;
+            color: #fff;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.3rem;
+            font-weight: bold;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 15px;
+            align-items: center;
+        }
+
+        nav a {
+            color: #fff;
+            font-size: 0.95rem;
+            transition: color 0.3s;
+        }
+
+        nav a:hover {
+            color: #d1e7dd;
+        }
+
+        /* =========================
+           TOMBOL DARK MODE
+        ========================= */
+        .dark-btn {
+            border: none;
+            background: transparent;
+            color: white;
+            font-size: 20px;
+            cursor: pointer;
+            padding: 5px 8px;
+            transition: transform 0.3s;
+        }
+
+        .dark-btn:hover {
+            transform: rotate(20deg) scale(1.1);
+        }
+
+        /* =========================
+           HAMBURGER MENU
+        ========================= */
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            cursor: pointer;
+            padding: 5px;
+        }
+
+        .hamburger span {
+            width: 27px;
+            height: 3px;
+            background-color: white;
+            border-radius: 5px;
+            transition: 0.3s;
+        }
+
+        /* Animasi hamburger */
+        .hamburger.active span:nth-child(1) {
+            transform: rotate(45deg) translate(6px, 6px);
+        }
+
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(5px, -5px);
+        }
+
+        /* =========================
+           HERO
+        ========================= */
+        .hero {
+            display: flex;
+            align-items: center;
+            gap: 30px;
+            text-align: left;
+        }
+
+        .hero img {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid #0056b3;
+        }
+
+        .hero-text h1 {
+            font-size: 2rem;
+            color: #222;
+        }
+
+        .hero-text p {
+            color: #666;
+            margin-top: 10px;
+        }
+
+        /* =========================
+           CARD
+        ========================= */
+        .grid-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+        }
+
+        .card {
+            border: 1px solid #e0e0e0;
+            padding: 15px;
+            border-radius: 6px;
+            background-color: #fafafa;
+            transition: transform 0.3s, background-color 0.4s;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+        }
+
+        ul.item-list {
+            list-style-type: square;
+            padding-left: 20px;
+        }
+
+        ul.item-list li {
+            margin-bottom: 8px;
+        }
+
+        /* =========================
+           BACK TO TOP
+        ========================= */
+        #backToTop {
+            position: fixed;
+            bottom: 25px;
+            right: 25px;
+
+            width: 50px;
+            height: 50px;
+
+            border: none;
+            border-radius: 50%;
+
+            background-color: #0056b3;
+            color: white;
+
+            font-size: 22px;
+            cursor: pointer;
+
+            opacity: 0;
+            visibility: hidden;
+
+            transform: translateY(20px);
+            transition: all 0.4s ease;
+
+            z-index: 999;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.25);
+        }
+
+        #backToTop.show {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        #backToTop:hover {
+            background-color: #003d80;
+            transform: translateY(-5px);
+        }
+
+        /* =========================
+           DARK MODE
+        ========================= */
+        body.dark {
+            background-color: #121212;
+            color: #eaeaea;
+        }
+
+        body.dark section {
+            background-color: #1e1e1e;
+            color: #eaeaea;
+        }
+
+        body.dark .hero-text h1 {
+            color: #fff;
+        }
+
+        body.dark .hero-text p {
+            color: #bbb;
+        }
+
+        body.dark .card {
+            background-color: #252525;
+            border-color: #444;
+        }
+
+        body.dark h2 {
+            color: #4da3ff;
+            border-color: #4da3ff;
+        }
+
+        body.dark header {
+            background-color: #003d80;
+        }
+
+        /* =========================
+           RESPONSIVE HP
+        ========================= */
+        @media (max-width: 768px) {
+
+            .container {
+                width: 92%;
+            }
+
+            /* Header */
+            .header-content {
+                flex-direction: row;
+                position: relative;
+            }
+
+            /* Hamburger tampil */
+            .hamburger {
+                display: flex;
+            }
+
+            /* Navbar disembunyikan */
+            nav {
+                position: absolute;
+                top: 70px;
+                left: 0;
+                width: 100%;
+
+                background-color: #0056b3;
+
+                max-height: 0;
+                overflow: hidden;
+
+                transition: max-height 0.4s ease;
+            }
+
+            /* Navbar muncul */
+            nav.active {
+                max-height: 500px;
+            }
+
+            nav ul {
+                flex-direction: column;
+                gap: 0;
+                padding: 10px 0;
+            }
+
+            nav ul li {
+                width: 100%;
+                text-align: center;
+            }
+
+            nav a {
+                display: block;
+                padding: 12px;
+                width: 100%;
+            }
+
+            nav a:hover {
+                background-color: rgba(255,255,255,0.1);
+            }
+
+            /* Dark mode navbar */
+            body.dark nav {
+                background-color: #003d80;
+            }
+
+            /* Hero */
+            .hero {
+                flex-direction: column;
+                text-align: center;
+                gap: 20px;
+            }
+
+            .hero img {
+                width: 130px;
+                height: 130px;
+            }
+
+            .hero-text h1 {
+                font-size: 1.7rem;
+            }
+
+            /* Section */
+            section {
+                padding: 20px;
+            }
+
+            /* Back to top */
+            #backToTop {
+                width: 45px;
+                height: 45px;
+                bottom: 20px;
+                right: 20px;
+            }
+        }
+
+        /* HP kecil */
+        @media (max-width: 480px) {
+
+            .logo {
+                font-size: 1.1rem;
+            }
+
+            .hero-text h1 {
+                font-size: 1.5rem;
+            }
+
+            .hero-text p {
+                font-size: 0.9rem;
+            }
+
+            h2 {
+                font-size: 1.3rem;
+            }
+
+            .grid-cards {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- =========================
+         HEADER
+    ========================= -->
+    <header>
+        <div class="container header-content">
+
+            <div class="logo">
+                Portofolio
+            </div>
+
+            <!-- Navigasi -->
+            <nav id="navbar">
+                <ul>
+                    <li><a href="#pendidikan">Pendidikan</a></li>
+                    <li><a href="#keahlian">Keahlian</a></li>
+                    <li><a href="#proyek">Proyek</a></li>
+                    <li><a href="#pengalaman">Pengalaman</a></li>
+                    <li><a href="#sertifikat">Sertifikat</a></li>
+                    <li><a href="#prestasi">Prestasi</a></li>
+                    <li><a href="#kontak">Kontak</a></li>
+
+                    <!-- Dark Mode -->
+                    <li>
+                        <button class="dark-btn" id="darkModeBtn">
+                            🌙
+                        </button>
+                    </li>
+                </ul>
+            </nav>
+
+            <!-- Hamburger -->
+            <div class="hamburger" id="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+
+        </div>
+    </header>
+
+
+    <main class="container">
+
+        <!-- =========================
+             HERO
+        ========================= -->
+        <section class="hero">
+
+            <img src="MSN.jpg.jpeg" alt="Foto Profil">
+
+            <div class="hero-text">
+                <h1>Latief & Rafi G</h1>
+
+                <p>
+                    Pengembang Web / Siswa / Profesional yang berfokus
+                    pada pembuatan solusi digital yang efisien dan bermanfaat.
+                </p>
+            </div>
+
+        </section>
+
+
+        <!-- =========================
+             PENDIDIKAN
+        ========================= -->
+        <section id="pendidikan">
+
+            <h2>Pendidikan</h2>
+
+            <div class="card">
+                <h3>S3 = SD, SMP, SMA</h3>
+
+                <p>
+                    <em>2014 - Sekarang</em>
+                </p>
+
+                <p>
+                    Sekarang fokus pada pengembangan web
+                    dan rekayasa perangkat lunak.
+                </p>
+            </div>
+
+        </section>
+
+
+        <!-- =========================
+             KEAHLIAN
+        ========================= -->
+        <section id="keahlian">
+
+            <h2>Keahlian</h2>
+
+            <ul class="item-list">
+
+                <li>
+                    <strong>Bahasa Pemrograman:</strong>
+                    HTML, CSS
+                </li>
+
+                <li>
+                    <strong>Desain:</strong>
+                    UI/UX Dasar
+                </li>
+
+                <li>
+                    <strong>Bahasa:</strong>
+                    Bahasa Indonesia, Bahasa Sunda
+                </li>
+
+            </ul>
+
+        </section>
+
+
+        <!-- =========================
+             PROYEK
+        ========================= -->
+        <section id="proyek">
+
+            <h2>Portofolio Proyek</h2>
+
+            <div class="grid-cards">
+
+                <div class="card">
+                    <h3>Rafi</h3>
+                    <p>Nothing.</p>
+                </div>
+
+                <div class="card">
+                    <h3>Latief</h3>
+                    <p>Nothing.</p>
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =========================
+             PENGALAMAN
+        ========================= -->
+        <section id="pengalaman">
+
+            <h2>Pengalaman</h2>
+
+            <div class="card">
+
+                <h3>
+                    Membuat WEB Sederhana - Desain WEB
+                </h3>
+
+                <p>
+                    <em>Juli 2024 - Juli 2027</em>
+                </p>
+
+                <p>
+                    Membuat & Mendesain.
+                </p>
+
+            </div>
+
+        </section>
+
+
+        <!-- =========================
+             SERTIFIKAT
+        ========================= -->
+        <section id="sertifikat">
+
+            <h2>Sertifikat</h2>
+
+            <ul class="item-list">
+
+                <li>Rafi: Nothing</li>
+                <li>Latief: Nothing</li>
+
+            </ul>
+
+        </section>
+
+
+        <!-- =========================
+             PRESTASI
+        ========================= -->
+        <section id="prestasi">
+
+            <h2>Prestasi</h2>
+
+            <ul class="item-list">
+
+                <li>Rafi: Nothing</li>
+                <li>Latief: Nothing</li>
+
+            </ul>
+
+        </section>
+
+
+        <!-- =========================
+             KONTAK LATIEF
+        ========================= -->
+        <section id="kontak">
+
+            <h2>Kontak Latief</h2>
+
+            <p>
+                Jika Anda tertarik untuk berkolaborasi,
+                silakan hubungi saya melalui:
+            </p>
+
+            <br>
+
+            <p>
+                <strong>Email:</strong>
+                email@LatiefZ.com
+            </p>
+
+            <p>
+                <strong>LinkedIn:</strong>
+                linkedin.com/in/Latiefz
+            </p>
+
+            <p>
+                <strong>Telepon:</strong>
+                +62 812-3456-7890
+            </p>
+
+        </section>
+
+
+        <!-- =========================
+             KONTAK RAFI
+        ========================= -->
+        <section id="kontak-rafi">
+
+            <h2>Kontak Rafi</h2>
+
+            <p>
+                Jika Anda tertarik untuk berkolaborasi,
+                silakan hubungi saya melalui:
+            </p>
+
+            <br>
+
+            <p>
+                <strong>Email:</strong>
+                email@RafiGcom
+            </p>
+
+            <p>
+                <strong>LinkedIn:</strong>
+                linkedin.com/in/RafiG
+            </p>
+
+            <p>
+                <strong>Telepon:</strong>
+                +62 834-0988-5678
+            </p>
+
+        </section>
+
+    </main>
+
+
+    <!-- =========================
+         BACK TO TOP
+    ========================= -->
+    <button id="backToTop" title="Kembali ke atas">
+        ↑
+    </button>
+
+
+    <!-- =========================
+         JAVASCRIPT
+    ========================= -->
+    <script>
+
+        /* =========================
+           HAMBURGER MENU
+        ========================= */
+
+        const hamburger = document.getElementById("hamburger");
+        const navbar = document.getElementById("navbar");
+
+        hamburger.addEventListener("click", function () {
+
+            hamburger.classList.toggle("active");
+            navbar.classList.toggle("active");
+
+        });
+
+
+        /* Menutup menu setelah memilih menu */
+
+        const navLinks = document.querySelectorAll("nav a");
+
+        navLinks.forEach(function(link) {
+
+            link.addEventListener("click", function() {
+
+                hamburger.classList.remove("active");
+                navbar.classList.remove("active");
+
+            });
+
+        });
+
+
+        /* =========================
+           DARK MODE
+        ========================= */
+
+        const darkModeBtn = document.getElementById("darkModeBtn");
+
+        darkModeBtn.addEventListener("click", function() {
+
+            document.body.classList.toggle("dark");
+
+            if (document.body.classList.contains("dark")) {
+
+                darkModeBtn.innerHTML = "☀️";
+
+            } else {
+
+                darkModeBtn.innerHTML = "🌙";
+
+            }
+
+        });
+
+
+        /* =========================
+           BACK TO TOP
+        ========================= */
+
+        const backToTop = document.getElementById("backToTop");
+
+
+        /* Tombol muncul ketika scroll */
+
+        window.addEventListener("scroll", function() {
+
+            if (window.scrollY > 300) {
+
+                backToTop.classList.add("show");
+
+            } else {
+
+                backToTop.classList.remove("show");
+
+            }
+
+        });
+
+
+        /* Kembali ke bagian paling atas */
+
+        backToTop.addEventListener("click", function() {
+
+            window.scrollTo({
+                top: 0,
+                behavior: "smooth"
+            });
+
+        });
+
+    </script>
+
+</body>
+</html>
